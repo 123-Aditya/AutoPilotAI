@@ -2,6 +2,7 @@ package com.autopilot.autopilot_agent.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 public class HealthMonitorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HealthMonitorService.class);
+    
+    @Autowired
+    private AiAnalysisService aiAnalysisService;
 
     @Value("${agent.target.url}")
     private String targetUrl;
@@ -29,9 +33,16 @@ public class HealthMonitorService {
     public void checkAppHealth() {
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(targetUrl, String.class);
-            LOG.info("Target App Health: {}", response.getBody());
+            String healthJson = response.getBody();
+            LOG.info("Raw Health JSON: {}", healthJson);
+
+            // Ask AI to analyze
+            String aiInsight = aiAnalysisService.analyzeHealth(healthJson);
+            LOG.info("AI agent analysis:\n{}", aiInsight);
+
         } catch (Exception e) {
-            LOG.error("Target app not reachable or unhealthy: {}", e.getMessage());
+            LOG.error("Target app not reachable: {}", e.getMessage());
         }
     }
+
 }
