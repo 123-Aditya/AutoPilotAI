@@ -89,3 +89,11 @@ Our Autopilot Agent will now:
 ---
 
 # 🧩 PHASE 6 — AI-Guided Code Fixes
+
+---
+
+## 💡 Author
+
+Aditya Upadhyaya
+
+GitHub: [123-Aditya](https://github.com/123-Aditya)
