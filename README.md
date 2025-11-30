@@ -84,4 +84,8 @@ Our Autopilot Agent will now:
 
 🧠 Ask AI whether recovery succeeded
 
-📄 Generate a final developer report:
+📄 Generate a final developer report
+
+---
+
+# 🧩 PHASE 6 — AI-Guided Code Fixes
