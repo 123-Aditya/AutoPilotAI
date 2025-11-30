@@ -1,5 +1,12 @@
 package com.autopilot.autopilot_agent.service;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +46,33 @@ public class HealthMonitorService {
             // Ask AI to analyze
             String aiInsight = aiAnalysisService.analyzeHealth(healthJson);
             LOG.info("AI agent analysis:\n{}", aiInsight);
-
+            
+            // Save to daily report file
+            saveAnalysisToFile(aiInsight);
         } catch (Exception e) {
+        	String errorMsg = "Target app not reachable or unhealthy: " + e.getMessage();
             LOG.error("Target app not reachable: {}", e.getMessage());
+            saveAnalysisToFile(errorMsg);
+        }
+    }
+    
+    private void saveAnalysisToFile(String content) {
+        try {
+            Path reportsDir = Path.of("reports");
+            if (!Files.exists(reportsDir)) {
+                Files.createDirectories(reportsDir);
+            }
+
+            String fileName = "ai-analysis-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".log";
+            Path reportFile = reportsDir.resolve(fileName);
+
+            try (FileWriter writer = new FileWriter(reportFile.toFile(), true)) {
+                writer.write("\n[" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "]\n");
+                writer.write(content + "\n");
+                writer.write("----------------------------------------------------\n");
+            }
+        } catch (IOException e) {
+            LOG.error("Error writing AI analysis report: {}", e.getMessage());
         }
     }
 
