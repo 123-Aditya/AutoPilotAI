@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.autopilot.autopilot_agent.service.recovery.RecoveryOrchestrator;
+import com.autopilot.autopilot_agent.service.recovery.RecoveryResult;
+
 import org.springframework.http.ResponseEntity;
 
 @Service
@@ -23,6 +27,9 @@ public class HealthMonitorService {
     
     @Autowired
     private AiAnalysisService aiAnalysisService;
+    
+    @Autowired
+    private RecoveryOrchestrator orchestrator;
 
     @Value("${agent.target.url}")
     private String targetUrl;
@@ -53,9 +60,11 @@ public class HealthMonitorService {
             // Save to daily report file
             saveAnalysisToFile(aiInsight);
         } catch (Exception e) {
-        	String errorMsg = "Target app not reachable or unhealthy: " + e.getMessage();
             LOG.error("Target app not reachable: {}", e.getMessage());
-            saveAnalysisToFile(errorMsg);
+            
+            RecoveryResult result = orchestrator.attemptRecovery();
+            LOG.info("🛠️ Recovery summary:\n{}", result.summary());
+            saveAnalysisToFile(result.summary());
         }
     }
     
