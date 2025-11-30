@@ -11,3 +11,77 @@
 ---
 
 ## 🚀 Getting Started
+
+---
+
+# 🧩 PHASE 1 — FOUNDATION (First Step)
+
+🎯 Goal:
+
+Create a simple Spring Boot Java application that:
+
+Has one REST endpoint
+
+Can run inside a Docker container
+
+---
+
+# 🧩 PHASE 2 — Monitoring Layer
+
+🎯 Goal:
+
+Add Spring Boot Actuator to the app so that it exposes:
+
+/actuator/health → tells if the app is running fine
+
+/actuator/metrics → shows CPU, memory, requests, etc.
+
+/actuator/loggers → lets us view and modify log levels dynamically
+
+---
+
+# 🧩 PHASE 3 — Agent Setup
+
+🎯 Goal:
+
+Create a Java-based agent service (a second Spring Boot app) that:
+
+Periodically calls the target app’s /actuator/health and /metrics endpoints
+
+Detects if the app is unhealthy or has degraded performance
+
+Logs findings for now (later, this will evolve into AI reasoning + self-healing logic)
+
+---
+
+# 🧩 PHASE 4 — AI Reasoning Setup
+
+🎯 Goal:
+
+Make Autopilot Agent use an LLM (Large Language Model) to:
+
+Interpret the health data (/actuator/health JSON responses)
+
+Summarize what’s happening (e.g., “App is healthy” or “Disk space low”)
+
+Suggest likely causes or recommended actions (in natural language)
+
+This transforms our agent from a monitoring tool → into an AI-assisted observer 🧠
+
+---
+
+# 🧩 PHASE 5 — AUTO FIX + REDEPLOY (CORE AGENTIC BEHAVIOR)
+
+🎯 What we will build in Phase 5
+
+Our Autopilot Agent will now:
+
+✅ Detect a failure (app DOWN, health != UP)
+
+🔁 Try up to N recovery strategies (e.g. restart container, rebuild image)
+
+🔍 Verify after each attempt (health check again)
+
+🧠 Ask AI whether recovery succeeded
+
+📄 Generate a final developer report:
