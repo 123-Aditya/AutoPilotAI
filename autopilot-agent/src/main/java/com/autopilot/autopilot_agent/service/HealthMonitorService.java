@@ -29,6 +29,9 @@ public class HealthMonitorService {
 
     @Value("${agent.poll-interval-ms}")
     private long pollInterval;
+    
+    @Value("${agent.reports.dir}")
+    private String reportsDir;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -58,13 +61,13 @@ public class HealthMonitorService {
     
     private void saveAnalysisToFile(String content) {
         try {
-            Path reportsDir = Path.of("reports");
-            if (!Files.exists(reportsDir)) {
-                Files.createDirectories(reportsDir);
+            Path reportsPath = Path.of(reportsDir);
+            if (!Files.exists(reportsPath)) {
+                Files.createDirectories(reportsPath);
             }
 
             String fileName = "ai-analysis-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".log";
-            Path reportFile = reportsDir.resolve(fileName);
+            Path reportFile = reportsPath.resolve(fileName);
 
             try (FileWriter writer = new FileWriter(reportFile.toFile(), true)) {
                 writer.write("\n[" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "]\n");
