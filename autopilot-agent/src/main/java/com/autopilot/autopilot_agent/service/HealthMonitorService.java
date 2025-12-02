@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.autopilot.autopilot_agent.resiliency.RecoveryGuard;
 import com.autopilot.autopilot_agent.service.recovery.RecoveryOrchestrator;
 import com.autopilot.autopilot_agent.service.recovery.RecoveryResult;
 
@@ -30,6 +31,9 @@ public class HealthMonitorService {
     
     @Autowired
     private RecoveryOrchestrator orchestrator;
+    
+    @Autowired
+    private RecoveryGuard recoveryGuard;
 
     @Value("${agent.target.url}")
     private String targetUrl;
@@ -64,6 +68,12 @@ public class HealthMonitorService {
             
             RecoveryResult result = null;
 			try {
+				if (!recoveryGuard.canRecover()) {
+				    LOG.warn("⏳ Recovery skipped due to cooldown window");
+				    return;
+				}
+
+				recoveryGuard.markRecoveryAttempted();
 				result = orchestrator.attemptRecovery();
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
