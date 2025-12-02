@@ -62,7 +62,12 @@ public class HealthMonitorService {
         } catch (Exception e) {
             LOG.error("Target app not reachable: {}", e.getMessage());
             
-            RecoveryResult result = orchestrator.attemptRecovery();
+            RecoveryResult result = null;
+			try {
+				result = orchestrator.attemptRecovery();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
             LOG.info("🛠️ Recovery summary:\n{}", result.summary());
             saveAnalysisToFile(result.summary());
         }
