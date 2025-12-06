@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.autopilot.autopilot_agent.util.DockerSafetyUtil;
+
 @Component
 public class DockerRebuildStrategy implements RecoveryStrategy {
 
@@ -16,6 +18,14 @@ public class DockerRebuildStrategy implements RecoveryStrategy {
 
     @Override
     public boolean attemptRecovery() {
+    	
+    	// SAFETY CHECK: Does the container exist?
+        if (!DockerSafetyUtil.containerExists("autopilot-ai-app")) {
+            LOG.warn("Container 'autopilot-ai-app' not found. Skipping restart.");
+            
+            return false;
+        }
+        
         try {
             Process build = new ProcessBuilder(
                     "docker", "build", "-t", "autopilot-ai-app", "."
