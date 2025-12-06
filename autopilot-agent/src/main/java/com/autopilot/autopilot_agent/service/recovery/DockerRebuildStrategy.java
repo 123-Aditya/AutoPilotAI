@@ -3,8 +3,7 @@ package com.autopilot.autopilot_agent.service.recovery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.autopilot.autopilot_agent.util.DockerSafetyUtil;
+import com.autopilot.autopilot_agent.util.ProcessUtil;
 
 @Component
 public class DockerRebuildStrategy implements RecoveryStrategy {
@@ -18,26 +17,34 @@ public class DockerRebuildStrategy implements RecoveryStrategy {
 
     @Override
     public boolean attemptRecovery() {
-    	
-    	// SAFETY CHECK: Does the container exist?
-        if (!DockerSafetyUtil.containerExists("autopilot-ai-app")) {
-            LOG.warn("Container 'autopilot-ai-app' not found. Skipping restart.");
-            
-            return false;
-        }
-        
+
         try {
-            Process build = new ProcessBuilder(
-                    "docker", "build", "-t", "autopilot-ai-app", "."
-            ).inheritIO().start();
+            LOG.info("Attempting Docker build...");
 
-            if (build.waitFor() != 0) return false;
+            boolean buildSuccess = ProcessUtil.run(
+                    new ProcessBuilder("docker", "build", "-t", "autopilot-ai-app", "."),
+                    120  // build timeout ~2 minutes
+            );
 
-            Process run = new ProcessBuilder(
-                    "docker", "run", "-d", "-p", "8080:8080", "autopilot-ai-app"
-            ).inheritIO().start();
+            if (!buildSuccess) {
+                LOG.warn("Docker build failed.");
+                return false;
+            }
 
-            return run.waitFor() == 0;
+            LOG.info("Attempting Docker run...");
+
+            boolean runSuccess = ProcessUtil.run(
+                    new ProcessBuilder(
+                        "docker", "run",
+                        "-d", "-p", "8080:8080",
+                        "--name", "autopilot-ai-app",
+                        "autopilot-ai-app"
+                    ),
+                    30 // timeout
+            );
+
+            return runSuccess;
+
         } catch (Exception e) {
             LOG.error("Docker rebuild failed", e);
             return false;
