@@ -14,7 +14,7 @@
 
 ---
 
-# 🧩 PHASE 1 — FOUNDATION (First Step)
+# 🧩 PHASE 1 — FOUNDATION (TARGET APPLICATION)
 
 🎯 Goal:
 
@@ -26,7 +26,7 @@ Can run inside a Docker container
 
 ---
 
-# 🧩 PHASE 2 — Monitoring Layer
+# 🧩 PHASE 2 — Monitoring Layer (MONITORING HEARTBEAT OF THE APPLICATION)
 
 🎯 Goal:
 
@@ -40,7 +40,7 @@ Add Spring Boot Actuator to the app so that it exposes:
 
 ---
 
-# 🧩 PHASE 3 — Agent Setup
+# 🧩 PHASE 3 — Agent Setup (BUILDING THE AUTOPILOT)
 
 🎯 Goal:
 
@@ -54,7 +54,7 @@ Logs findings for now (later, this will evolve into AI reasoning + self-healing 
 
 ---
 
-# 🧩 PHASE 4 — AI Reasoning Setup
+# 🧩 PHASE 4 — AI Reasoning Setup (ADDING BRAIN TO THE AUTOPILOT)
 
 🎯 Goal:
 
@@ -88,7 +88,7 @@ Our Autopilot Agent will now:
 
 ---
 
-# 🧩 PHASE 6 — AI-Guided Code Fixes
+# 🧩 PHASE 6 — AI-Guided Code Fixes (SELF HEALING)
 
 🎯 Where the agent will be able to:
 
