@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.util;
+package com.autopilot.agent.util;
 
 public class DockerSafetyUtil {
 

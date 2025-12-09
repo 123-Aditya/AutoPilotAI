@@ -1,9 +1,9 @@
-package com.autopilot.autopilot_agent.service.recovery;
+package com.autopilot.agent.service.recovery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import com.autopilot.autopilot_agent.util.ProcessUtil;
+import com.autopilot.agent.util.ProcessUtil;
 
 @Component
 public class DockerRebuildStrategy implements RecoveryStrategy {

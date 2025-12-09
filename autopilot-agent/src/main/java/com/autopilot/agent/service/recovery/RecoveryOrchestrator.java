@@ -1,9 +1,9 @@
-package com.autopilot.autopilot_agent.service.recovery;
+package com.autopilot.agent.service.recovery;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.autopilot.autopilot_agent.service.HealthVerifier;
+import com.autopilot.agent.service.HealthVerifier;
 
 @Service
 public class RecoveryOrchestrator {

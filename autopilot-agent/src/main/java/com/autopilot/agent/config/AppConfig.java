@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.config;
+package com.autopilot.agent.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

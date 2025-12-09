@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.resiliency;
+package com.autopilot.agent.resiliency;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.model;
+package com.autopilot.agent.model;
 
 public record RecoveryAttempt(
         int attemptNo,

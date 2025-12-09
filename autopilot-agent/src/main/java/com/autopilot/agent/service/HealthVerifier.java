@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.service;
+package com.autopilot.agent.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.util;
+package com.autopilot.agent.util;
 
 import java.util.concurrent.TimeUnit;
 

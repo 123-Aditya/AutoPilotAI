@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.service;
+package com.autopilot.agent.service;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Value;

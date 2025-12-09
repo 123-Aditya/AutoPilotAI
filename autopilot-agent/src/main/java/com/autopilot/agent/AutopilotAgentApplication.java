@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent;
+package com.autopilot.agent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

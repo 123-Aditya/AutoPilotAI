@@ -1,4 +1,4 @@
-package com.autopilot.autopilot_agent.service.recovery;
+package com.autopilot.agent.service.recovery;
 
 public interface RecoveryStrategy {
 	
