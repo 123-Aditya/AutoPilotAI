@@ -90,19 +90,19 @@ Our Autopilot Agent will now:
 
 # 🧩 PHASE 6 — AI-Guided Code Fixes
 
-Where the agent will be able to:
+🎯 Where the agent will be able to:
 
-Read stack traces
+✅ Read stack traces
 
-Ask AI how to fix them
+❓ Ask AI how to fix them
 
-Apply code patches
+🧠 Apply code patches
 
-Test them
+🧪 Test them
 
-Redeploy
+🔁 Redeploy
 
-Provide a PR-like summary
+📄 Provide a PR-like summary
 
 ---
 
